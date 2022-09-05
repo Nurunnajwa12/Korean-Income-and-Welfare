@@ -1,6 +1,8 @@
 
 # Korean Income and Welfare
 
+![seoul-aesthetic-sky-oirqhpbhjvu3vvim](https://user-images.githubusercontent.com/89633522/188369511-1e6a10d4-299d-4e98-83c9-eca465fed21a.jpg)
+
 This project are require to conduct an inference statistical analysis that cover the following analysis based on dataset https://www.kaggle.com/datasets/hongsean/korea-income-and-welfare.
 
 ## Data
