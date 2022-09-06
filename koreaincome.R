@@ -61,6 +61,8 @@ install.packages(ggplot2)
   
 #Chi Square Goodness of Fit Test
 #Variable:Educational Level
+#H0= The proportion between each educational level are same
+#H1= The proportion between each educational level are different
 
   edu <- Korea %>%
     mutate(size= cut(income,
