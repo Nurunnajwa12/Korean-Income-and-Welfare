@@ -32,7 +32,7 @@ Dependent value = income
 
 We want to predict the value of income based on the year born.
 
-#Chi Square Goodness of Fit Test
+## Chi Square Goodness of Fit Test
 
 Variable : Educational Level
 
