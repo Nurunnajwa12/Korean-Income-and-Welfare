@@ -32,6 +32,12 @@ Dependent value = income
 
 We want to predict the value of income based on the year born.
 
+#Chi Square Goodness of Fit Test
+
+Variable : Educational Level
+
+We want to observe wether the proportion of each educational level is different or same
+
 ## Chi Square Independent Test
 
 Variables: Marriage and Educational Level
