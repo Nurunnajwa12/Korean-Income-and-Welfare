@@ -72,4 +72,14 @@ install.packages(ggplot2)
     select(education_level, size)
   
   table(edu)
+
+  # Second Chi Square
+           
+  edu2<- table(Korea$education_level)
+  
+  el <- matrix(edu2,nrow = 1,ncol=8)
+  colnames(el) <- c("College","Degree","Doctoral Degree","Elementary",
+                       "High school","Master","Middle school","No education")
+  rownames(el) <- "Frequency"
+  print(el)
   
