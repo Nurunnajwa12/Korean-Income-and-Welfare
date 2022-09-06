@@ -56,3 +56,18 @@ install.packages(ggplot2)
   model<-lm(y~x)
   model
   abline(model)
+           
+#------------------------------------------------------------------------------------------
+  
+#Chi Square Goodness of Fit Test
+#Variable:Educational Level
+
+  edu <- Korea %>%
+    mutate(size= cut(income,
+                     breaks= 8,
+                     labels= c("College","Degree","Doctoral Degree","Elementary",
+                               "High school","Master","Middle school","No education")))
+    select(education_level, size)
+  
+  table(edu)
+  
