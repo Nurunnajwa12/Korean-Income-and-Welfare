@@ -1,11 +1,9 @@
-library(readxl)
-Korea_Income_Clean <- read_excel("~/01_Data Engineering/Semester 2/SECI2143/Project 2 STILL LIFE/Data_Project2/Korea-Income-Clean.xlsx")
-View(Korea_Income_Clean)
+
+# KOREAN INCOME AND WELFARE DATA ANALYSIS #
 
 library(readxl)
 Korea <- read_excel("~/01_Data Engineering/Semester 2/SECI2143/Project 2 STILL LIFE/Data_Project2/Korea-Income-Clean.xlsx")
 View(Korea)
-
 
 install.packages("dplyr")
 library(dplyr)
@@ -19,67 +17,106 @@ summary(Korea$income)
 
 #-------------------------------------------------------------------------------------------------------#
 
-#T test (two sample)
-#Gender and Income
-#Null hypothesis = The average income of each group is same.
-#Alternative hypothesis = The average income for each group is different.
+# T test (two sample)
+# Gender and Income
+
+# H0: The average income of each group is same.
+# H1: The average income for each group is different.
 
 Korea %>%
   t.test(income~gender, data=.,var.equal=FALSE)
 
-y=Korea$income
-x=Korea$family_member
-cor(x,y)
+table(gender)
+summary(gender)
+
+# Conclusion
+# t 0.025,920 = 1.96
+# Since t0= 0.347 is less than 1.96, we fail to reject the H0 at significant level, 0.05.
+# There is no sufficient evidnece that mean income of male is different from mean income of female.
 
 #--------------------------------------------------------------------------------------------------------#
-#Correlation test
-#Using Pearson correlation method
-#Family members and income
+
+# Correlation test
+# Using Pearson correlation method
+# Family members and income
+
+# H0: No linear correlation
+# H1: Linear correlation exist
 cor.test(x,y, method=c("pearson"))
 
-#scatter plot
-install.packages(ggplot2)
-  Korea%>%
-    ggplot(aes(x,y,colour="blue")+
-    geom_point()+
-    geom_smooth(method=lm,
-                se=F)+
-    labs(x="Family Members",
-         y="Income",
-         title="Correlation between income and family members")+
-    theme_minimal()
-  
-  #Second scatter plot
-  plot(x,y, xlim=c(0,10),ylim=c(100,25000),xlab="Family Member", ylab="Income(KRW)")
+#Second scatter plot
+  plot(x,y, xlim=c(0,10),ylim=c(100,25000),xlab="Family Member", ylab="Income(KRW)",col="blue",
+       main= "Correlation between family member and income(won)")
 
-  #regression line
+#regression line
   model<-lm(y~x)
   model
   abline(model)
-           
+  
+# Conclusion
+# r=0.267 ->relatively weak positive linear relationship between family members and income.
+
 #------------------------------------------------------------------------------------------
   
-#Chi Square Goodness of Fit Test
-#Variable:Educational Level
-#H0= The proportion between each educational level are same
-#H1= The proportion between each educational level are different
+# Chi Square Independent Test
+# Variable:Educational Level and Marriage
+  
+#H0= Educational Level and marriage are independent
+#H1= Educational level and marriage are dependent
 
-  edu <- Korea %>%
-    mutate(size= cut(income,
-                     breaks= 8,
-                     labels= c("College","Degree","Doctoral Degree","Elementary",
-                               "High school","Master","Middle school","No education")))
-    select(education_level, size)
+  dataFrame <- with(Korea,table(education_level,marriage))
+  print(dataFrame)
   
-  table(edu)
+  Education_Marriage <- matrix(dataFrame, ncol=2,nrow=8)
+rownames(Education_Marriage)<- c("College","Degree","Doctoral Degree","Elementary",
+                                 "High school","Master","Middle school","No education")
+colnames(Education_Marriage)<-c("Married","Not Married")
+print(Education_Marriage)
 
-  # Second Chi Square
-           
-  edu2<- table(Korea$education_level)
-  
-  el <- matrix(edu2,nrow = 1,ncol=8)
-  colnames(el) <- c("College","Degree","Doctoral Degree","Elementary",
-                       "High school","Master","Middle school","No education")
-  rownames(el) <- "Frequency"
-  print(el)
-  
+
+# First Method to do Chi Square Test
+model<- chisq.test(Education_Marriage)
+print(model)
+
+# Second Method to do Chi Square Test
+model2<- as.table(Education_Marriage)
+summary(model2)
+
+# Conclusion
+# Since p-value <0.05, we reject H0 at significant level of 0.05.
+# There is sufficient evidence that educational level not independent to marriage
+
+#--------------------------------------------------------#
+# Regression Test 
+# Variables : Year born and Income
+
+# Independent var = year born
+# Dependent = income
+# Change in income are assumed to be caused by changes in year born
+ 
+year <- Korea$year_born
+income <- Korea$income
+
+model<-lm(income~year)
+print(model)
+
+# No year born has 0 year, b0 = -88674.14 is the portion of income not explained by year born.
+# b1 = 45.73 tell us that average income increases by 45.73 won, for each additional one year born.
+
+#Plot scatterplot
+plot(year,income,xlim = c(min(year),2000),ylim = c(500,max(income)),
+     ylab = "Income (Won)",xlab = "Year Born",col = "blue",
+     main = "Income versus Year-Born")
+abline(model)
+summary(model)
+
+# Conclusion
+# R squared = 0.078 (between 0 and 1)
+# Therefore, weaker linear relationship between income and year born.
+# Some but not all of the value of income explained by yea born.
+# 7.8% of the variation in income explained by variation in year born.
+
+# Is there a linear relationship between income and year born?
+# H0: B1=0
+# H1: B1 !=0
+# Since B1=45.728, linear relationship does exist.
