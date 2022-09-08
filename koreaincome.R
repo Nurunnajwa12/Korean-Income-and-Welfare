@@ -1,5 +1,5 @@
 
-# KOREAN INCOME AND WELFARE DATA ANALYSIS #
+# KOREAN INCOME AND WELFARE DATA ANALYSYS#
 
 library(readxl)
 Korea <- read_excel("~/01_Data Engineering/Semester 2/SECI2143/Project 2 STILL LIFE/Data_Project2/Korea-Income-Clean.xlsx")
@@ -17,31 +17,37 @@ summary(Korea$income)
 
 #-------------------------------------------------------------------------------------------------------#
 
-# T test (two sample)
-# Gender and Income
+#T test (two sample)
+#Gender and Income
 
-# H0: The average income of each group is same.
-# H1: The average income for each group is different.
+#H0 = The average income of each group is same.
+#H1 = The average income for each group is different.
 
-Korea %>%
-  t.test(income~gender, data=.,var.equal=FALSE)
+inc <- Korea$income
+gend<- Korea$gender
+  t.test(inc~gend,var.equal=FALSE)
+  
+  barplot( x= gend, y= inc, col="pink")
 
-table(gender)
-summary(gender)
+table(gend)
+summary(gend)
 
-# Conclusion
+barplot(table(gend),main="Gender vs Income",xlab="Gender",
+        ylab="Income", border="black",col="pink",density=90)
+
+#Conclusion
 # t 0.025,920 = 1.96
-# Since t0= 0.347 is less than 1.96, we fail to reject the H0 at significant level, 0.05.
-# There is no sufficient evidnece that mean income of male is different from mean income of female.
+#Since t0= 0.347 is less than 1.96, we fail to reject the H0 at significant level, 0.05.
+#There is no sufficient evidnece that mean income of male is different from mean income of female.
 
 #--------------------------------------------------------------------------------------------------------#
 
-# Correlation test
-# Using Pearson correlation method
-# Family members and income
+#Correlation test
+#Using Pearson correlation method
+#Family members and income
 
-# H0: No linear correlation
-# H1: Linear correlation exist
+#H0= No linear correlation
+#H1= Linear correlation exist
 cor.test(x,y, method=c("pearson"))
 
 #Second scatter plot
@@ -58,8 +64,8 @@ cor.test(x,y, method=c("pearson"))
 
 #------------------------------------------------------------------------------------------
   
-# Chi Square Independent Test
-# Variable:Educational Level and Marriage
+#Chi Square Independent Test
+#Variable:Educational Level and Marriage
   
 #H0= Educational Level and marriage are independent
 #H1= Educational level and marriage are dependent
@@ -74,11 +80,11 @@ colnames(Education_Marriage)<-c("Married","Not Married")
 print(Education_Marriage)
 
 
-# First Method to do Chi Square Test
+#First Method to do Chi Square Test
 model<- chisq.test(Education_Marriage)
 print(model)
 
-# Second Method to do Chi Square Test
+#Second Method to do Chi Square Test
 model2<- as.table(Education_Marriage)
 summary(model2)
 
@@ -87,8 +93,8 @@ summary(model2)
 # There is sufficient evidence that educational level not independent to marriage
 
 #--------------------------------------------------------#
-# Regression Test 
-# Variables : Year born and Income
+#Regression Test 
+#Variables : Year born and Income
 
 # Independent var = year born
 # Dependent = income
