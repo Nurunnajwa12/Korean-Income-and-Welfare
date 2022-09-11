@@ -23,7 +23,7 @@ assuming unequal variances.
 
 Variables: Income and Family Members
 
-We observe the strength of relationships between the two variables above by using Pearson product moment orrelation.
+We observe the strength of relationships between the two variables above by using Pearson product moment correlation.
 
 ## Regression Test 
 
