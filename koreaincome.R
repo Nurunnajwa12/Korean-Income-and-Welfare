@@ -2,11 +2,20 @@
 # KOREAN INCOME AND WELFARE DATA ANALYSYS#
 
 library(readxl)
+
+install.packages("cli")
+install.packages("dplyr")
+
+library(cli)
+library("scales") 
+library("stringr") 
+library("Hmisc") 
+library("forcats") 
+library("ggthemes") 
+library(dplyr)
+
 Korea <- read_excel("~/01_Data Engineering/Semester 2/SECI2143/Project 2 STILL LIFE/Data_Project2/Korea-Income-Clean.xlsx")
 View(Korea)
-
-install.packages("dplyr")
-library(dplyr)
 
 #Have a quick look
 glimpse(Korea)
@@ -26,19 +35,17 @@ summary(Korea$income)
 inc <- Korea$income
 gend<- Korea$gender
   t.test(inc~gend,var.equal=FALSE)
-  
-  barplot( x= gend, y= inc, col="pink")
 
 table(gend)
 summary(gend)
 
-barplot(table(gend),main="Gender vs Income",xlab="Gender",
-        ylab="Income", border="black",col="pink",density=90)
+ggplot(data=Korea,mapping=aes(x=gend, y=inc)) +
+  stat_summary(fun.data=mean_sdl, geom="bar",fill="lightblue")+labs(title="Mean of Income between Gender", x="Gender", y="Income")
 
 #Conclusion
 # t 0.025,920 = 1.96
 #Since t0= 0.347 is less than 1.96, we fail to reject the H0 at significant level, 0.05.
-#There is no sufficient evidnece that mean income of male is different from mean income of female.
+#There is no sufficient evidence that mean income of male is different from mean income of female.
 
 #--------------------------------------------------------------------------------------------------------#
 
