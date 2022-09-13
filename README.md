@@ -13,6 +13,9 @@ Clean data : Download through repository file (Korea-Income-Clean.xlsx)
 
 ## Hypothesis Testing (Two Sample)
 
+![gend](https://user-images.githubusercontent.com/89633522/189796933-4a48fe01-aef5-460c-881f-e46f2252b7f6.png)
+
+
 Variables: Income and Gender.
 
 We will test whether the mean of
@@ -21,11 +24,17 @@ assuming unequal variances.
 
 ## Correlation Test
 
+
+![fam](https://user-images.githubusercontent.com/89633522/189796926-b1212c33-29f0-4920-85be-21f761731e2d.png)
+
+
 Variables: Income and Family Members
 
 We observe the strength of relationships between the two variables above by using Pearson product moment correlation.
 
 ## Regression Test 
+
+![incomey](https://user-images.githubusercontent.com/89633522/189796920-fb998e9c-c3cd-45e4-9d3a-63b9badaf8a3.png)
 
 Independent value= Year born
 Dependent value = income
@@ -40,16 +49,11 @@ We want to observe wether the proportion of each educational level is different 
 
 ## Chi Square Independent Test
 
+![edumar](https://user-images.githubusercontent.com/89633522/189796995-439b784f-f974-4ecd-a026-364567572352.png)
+
 Variables: Marriage and Educational Level
 
 We want to test whether the educational level and marriage is independent or not.
-
-## ANOVA (Analysis of Variance)
-
-Variables: Region and Income
-
-We want to test wether the different part of regions have same mean of income.
-
 
 
 ## Language
