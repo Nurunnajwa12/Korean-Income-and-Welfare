@@ -4,18 +4,18 @@
 library(readxl)
 
 install.packages("cli")
-install.packages("dplyr")
-
 library(cli)
 library("scales") 
 library("stringr") 
 library("Hmisc") 
 library("forcats") 
 library("ggthemes") 
-library(dplyr)
 
 Korea <- read_excel("~/01_Data Engineering/Semester 2/SECI2143/Project 2 STILL LIFE/Data_Project2/Korea-Income-Clean.xlsx")
 View(Korea)
+
+install.packages("dplyr")
+library(dplyr)
 
 #Have a quick look
 glimpse(Korea)
@@ -55,10 +55,13 @@ ggplot(data=Korea,mapping=aes(x=gend, y=inc)) +
 
 #H0= No linear correlation
 #H1= Linear correlation exist
+x = Korea$family_member
+y = Korea$income
+
 cor.test(x,y, method=c("pearson"))
 
 #Second scatter plot
-  plot(x,y, xlim=c(0,10),ylim=c(100,25000),xlab="Family Member", ylab="Income(KRW)",col="blue",
+  plot(x,y, xlim=c(0,10),ylim=c(100,25000),xlab="Family Member", ylab="Income(KRW)",col="lightblue",
        main= "Correlation between family member and income(won)")
 
 #regression line
@@ -87,6 +90,10 @@ colnames(Education_Marriage)<-c("Married","Not Married")
 print(Education_Marriage)
 
 
+mosaicplot(Education_Marriage,xlab="Education",ylab="Marital Status",
+           main="Dependency between edu and marital status",border="black",color="skyblue2")
+
+
 #First Method to do Chi Square Test
 model<- chisq.test(Education_Marriage)
 print(model)
@@ -94,6 +101,9 @@ print(model)
 #Second Method to do Chi Square Test
 model2<- as.table(Education_Marriage)
 summary(model2)
+
+#Data Visualization
+
 
 # Conclusion
 # Since p-value <0.05, we reject H0 at significant level of 0.05.
@@ -118,7 +128,7 @@ print(model)
 
 #Plot scatterplot
 plot(year,income,xlim = c(min(year),2000),ylim = c(500,max(income)),
-     ylab = "Income (Won)",xlab = "Year Born",col = "blue",
+     ylab = "Income (Won)",xlab = "Year Born",col = "skyblue2",
      main = "Income versus Year-Born")
 abline(model)
 summary(model)
